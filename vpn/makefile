@@ -6,7 +6,8 @@ CC = clang
 # -Werror: turn warnings into errors
 # -Wsystem-headers: turn on warnings from system headers
 # -pedantic-errors: error on language extensions
-CFLAGS = -O2 -Werror -Wsystem-headers -pedantic-errors
+# -fuse-ld=lld: use the LLVM linker
+CFLAGS = -O2 -Werror -Wsystem-headers -pedantic-errors -fuse-ld=lld
 
 # the build target executable:
 TARGET = vpn
