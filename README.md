@@ -1,6 +1,8 @@
 # waybar-modules
 A repository of programs I use for custom waybar modules. 
 
+Binaries are provided but you can simply build with `make`.
+
 ![My Waybar](mywaybar.jpg)
 
 ## battery (C)
@@ -36,8 +38,8 @@ Here's some example Waybar css for this battery module:
 }
 ```
 
-## vpn_detect (sh)
-This script takes the name of a VPN interface, like "mullvad-us3", and returns json data containing information on the state of the VPN connection. 
+## vpn (C)
+This program takes the name of a VPN interface, like "mullvad-us3", and returns json data containing information on the state of the VPN connection. This information can be used to change the theme based on the state of your VPN connection in your waybar.css.
 
 Here's an example module in my Waybar config:
 
@@ -47,6 +49,22 @@ Here's an example module in my Waybar config:
   "tooltip": false,
   "format": "{}",
   "return-type": "json",
-  "exec": "bash /path/to/vpn_detect your-vpn-name"
+  "exec": "bash /path/to/vpn_detect mullvad-us3"
 },
+```
+
+Here's some example Waybar css for this VPN module:
+
+```
+#custom-vpn {
+    padding: 0 5px;
+    margin: 0 4px;
+    background-color: transparent;
+    border-bottom: 2px solid #00ff96;
+    color: #ffffff;
+}
+
+#custom-vpn.down {
+  border-bottom: 2px solid #dd2241;
+}
 ```
