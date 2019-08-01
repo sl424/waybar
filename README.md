@@ -49,7 +49,7 @@ Here's an example module in my Waybar config:
   "tooltip": false,
   "format": "{}",
   "return-type": "json",
-  "exec": "bash /path/to/vpn_detect mullvad-us3"
+  "exec": "$HOME/path/to/vpn/binary"
 },
 ```
 
