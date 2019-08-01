@@ -16,7 +16,6 @@
 #define PATH_STATE "/sys/class/power_supply/BAT0/status"
 
 // Functions
-void construct_path(char endOfPath[], char finalPath[]);
 float read_float_from_file(char fileToOpen[]);
 void read_string_from_file(char fileToOpen[], char contentOfFile[]);
 
@@ -64,7 +63,7 @@ int main()
 		batteryIcon = "";
 	else 
 		batteryIcon = "";
-		
+	
 	char *batteryStateIcon = "";
 	
 	if (strcmp(batteryState, "charging") == 0) {
