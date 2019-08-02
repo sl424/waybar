@@ -1,17 +1,57 @@
-#!/bin/sh
+#!/bin/bash
+#
+# Description: Script to help check project for errors.
+#
+# Homepage: https://gitlab.com/krathalan/waybar-modules
+#
+# Copyright (C) 2019 krathalan
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Constants
+# -----------------------------------------
+# -------------- Guidelines ---------------
+# -----------------------------------------
+
+# This script follows the Google Shell Style Guide: 
+# https://google.github.io/styleguide/shell.xml
+
+# This script uses shellcheck: https://www.shellcheck.net/
+
+# See https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/
+set -Eeuo pipefail
+
+# -----------------------------------------
+# ----------- Program variables -----------
+# -----------------------------------------
+
+# List of modules to check
+readonly MODULES=( "battery" "vpn" )
+
+# Colors
 readonly BOLDWHITE=$(tput sgr0 && tput bold)
 readonly GREEN=$(tput bold && tput setaf 2)
 readonly NC=$(tput sgr0) # No color/turn off all tput attributes
 
-# Functions
-run_scan_build()
+# -----------------------------------------
+# --------------- Functions ---------------
+# -----------------------------------------
+
+perform_on_all_modules()
 {
-	(
-		cd ../"$1" || exit
-		make clean && scan-build make
-	)
+	for module in "${MODULES[@]}"; do
+		"$1" "${module}"
+	done
 }
 
 printstep()
@@ -19,24 +59,40 @@ printstep()
 	printf "%s==> %s%s%s\n" "${GREEN}" "${BOLDWHITE}" "$1" "${NC}"
 }
 
-# Script
-if [ "$1" = "--long" ]; then
-	printstep "Running scan-build on battery.c..."
-	run_scan_build "battery"
+run_scan_build()
+{
+	printstep "Running scan-build on $1.c..."
+	(
+		cd ../"$1" || exit
+		make clean && scan-build make
+	)
 	printf "\n"
+}
 
-        printstep "Running scan-build on vpn.c..."
-	run_scan_build "vpn"
+run_sparse()
+{
+	printstep "Running Sparse on $1.c..."
+	sparse -Wsparse-all ../"$1/$1".c
 	printf "\n"
+}
 
-	printstep "Running valgrind on battery binary..."
-	valgrind --leak-check=full ../battery/battery
+run_valgrind()
+{
+	printstep "Running valgrind on $1 binary..."
+	valgrind --leak-check=full ../"$1/$1"
 	printf "\n"
+}
 
-	printstep "Running valgrind on vpn binary..."
-	valgrind --leak-check=full ../vpn/vpn
+# -----------------------------------------
+# ---------------- Script -----------------
+# -----------------------------------------
 
-	exit 0
+if [[ $# -gt 0 ]]; then
+	if [[ "$1" = "--long" ]]; then
+		perform_on_all_modules "run_scan_build"
+		perform_on_all_modules "run_valgrind"
+		exit 0
+	fi
 fi
 
 printstep "Running shellcheck on all shell scripts..."
@@ -47,9 +103,4 @@ printstep "Running cppcheck on all source code files..."
 cppcheck ../
 printf "\n"
 
-printstep "Running Sparse on battery.c..."
-sparse -Wsparse-all ../battery/battery.c
-printf "\n"
-
-printstep "Running Sparse on vpn.c..."
-sparse -Wsparse-all ../vpn/vpn.c
+perform_on_all_modules "run_sparse"
