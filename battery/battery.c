@@ -23,6 +23,9 @@
 // Needed to convert strings to lowercase
 #include <ctype.h>
 
+// Needed to exit when a directory cannot be found
+#include <stdlib.h>
+
 // Constants
 #define mW_TO_WATTS_FACTOR 1000000
 #define STR_BUFFER_LEN 15
@@ -110,6 +113,11 @@ float read_float_from_file(char fileToOpen[])
 	
 	fileToRead = fopen(fileToOpen, mode);
 	
+	if (fileToRead == NULL) {
+		printf("Error reading file %s", fileToOpen);
+		exit(0);
+	}
+	
 	fscanf(fileToRead, "%f", &toReturn);
 	
 	fclose(fileToRead);
@@ -123,6 +131,11 @@ void read_string_from_file(char fileToOpen[], char contentOfFile[])
 	char *mode = "r";
 	
 	fileToRead = fopen(fileToOpen, mode);
+	
+	if (fileToRead == NULL) {
+		printf("Error reading file %s", fileToOpen);
+		exit(0);
+	}
 	
 	fscanf(fileToRead, "%s", contentOfFile);
 	
