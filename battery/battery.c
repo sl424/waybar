@@ -94,9 +94,8 @@ float read_float_from_file(char fileToOpen[])
 {
 	float toReturn;
 	FILE *fileToRead;
-	char *mode = "r";
 	
-	fileToRead = fopen(fileToOpen, mode);
+	fileToRead = fopen(fileToOpen, "r");
 	
 	if (fileToRead == NULL) {
 		printf("Error reading file %s", fileToOpen);
@@ -113,9 +112,8 @@ float read_float_from_file(char fileToOpen[])
 void read_string_from_file(char fileToOpen[], char contentOfFile[])
 {
 	FILE *fileToRead;
-	char *mode = "r";
 	
-	fileToRead = fopen(fileToOpen, mode);
+	fileToRead = fopen(fileToOpen, "r");
 	
 	if (fileToRead == NULL) {
 		printf("Error reading file %s", fileToOpen);
