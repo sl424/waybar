@@ -1,13 +1,11 @@
 # the compiler
-CC = clang
+CC = gcc
 
-# compiler flags:
-# -O2: turn on level 2 optimizations
-# -Werror: turn warnings into errors
-# -Wsystem-headers: turn on warnings from system headers
-# -pedantic-errors: error on language extensions
-# -fuse-ld=lld: use the LLVM linker
-CFLAGS = -O2 -Werror -Wsystem-headers -pedantic-errors -fuse-ld=lld
+# compiler flags from /etc/makepkg.conf
+CFLAGS = -march=x86-64 -mtune=generic -O2 -pipe -fno-plt
+
+# linker flags from /etc/makepkg.conf
+LDFLAGS = -Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now
 
 # the build target executable:
 TARGET = vpn
