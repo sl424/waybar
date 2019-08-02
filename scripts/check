@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Constants
+readonly BOLDWHITE=$(tput sgr0 && tput bold)
+readonly GREEN=$(tput bold && tput setaf 2)
+readonly NC=$(tput sgr0) # No color/turn off all tput attributes
+
+# Functions
+printstep()
+{
+	printf "%s==> %s%s%s\n" "${GREEN}" "${BOLDWHITE}" "$1" "${NC}"
+}
+
+# Script
+printstep "Running shellcheck on all shell scripts..."
+shellcheck ./*
+printf "\n"
+
+printstep "Running cppcheck on all source code files..."
+cppcheck ../
+printf "\n"
+
+printstep "Running valgrind on battery binary..."
+valgrind --leak-check=full ../battery/battery
+printf "\n"
+
+printstep "Running valgrind on vpn binary..."
+valgrind --leak-check=full ../vpn/vpn
+

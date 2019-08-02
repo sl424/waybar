@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Functions
+build_binary()
+{
+	(
+		cd ../"$1" || exit
+		make clean && make -f makefile_release
+	)
+}
+
+# Script
+build_binary "battery"
+build_binary "vpn"
