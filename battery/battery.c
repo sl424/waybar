@@ -111,6 +111,8 @@ float read_float_from_file(char fileToOpen[])
 	float toReturn;
 	fscanf(fileToRead, "%f", &toReturn);
 	
+	fclose(fileToRead);
+	
 	return toReturn;
 }
 
@@ -121,4 +123,6 @@ void read_string_from_file(char fileToOpen[], char contentOfFile[])
 	fileToRead = fopen(fileToOpen, mode);
 	
 	fscanf(fileToRead, "%s", contentOfFile);
+	
+	fclose(fileToRead);
 }
