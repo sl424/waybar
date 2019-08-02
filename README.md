@@ -28,7 +28,7 @@ Here's an example module in my Waybar config:
     "format": "{percentage}% {}{icon}",
     "format-icons": ["", "", "", "", "", "", ""],
     "return-type": "json",
-    "exec": "$HOME/path/to/battery/binary"
+    "exec": "$HOME/path/to/binary/battery"
   },
 ```
 
@@ -61,7 +61,7 @@ Here's an example module in my Waybar config:
   "tooltip": false,
   "format": "{}",
   "return-type": "json",
-  "exec": "$HOME/path/to/vpn/binary"
+  "exec": "$HOME/path/to/binary/vpn mullvad-us5"
 },
 ```
 
