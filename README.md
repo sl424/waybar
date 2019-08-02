@@ -3,9 +3,9 @@ A repository of C programs I use for custom waybar modules.
 
 [Binaries and sums are provided](https://gitlab.com/krathalan/waybar-modules/-/releases) but you can simply build with `make release` in the module directory of your choosing, or run `sh make_release` in the `scripts/` directory of the project to build all modules in each of their directories.
 
-![My Waybar](mywaybar.jpg)
-
 ## battery
+![example battery module](images/battery.jpg)
+
 A battery module that displays the current power draw in watts. Displays an additional charging icon when charging. Does not display current power draw in watts when charging.
 
 The program will return, as json data to Waybar, the percentage of the battery. This allows changing the icon based on the battery percentage in your Waybar config.
@@ -49,6 +49,8 @@ Here's some example Waybar css for this battery module:
 ```
 
 ## vpn
+![example vpn module](images/vpn.jpg)
+
 This program takes the name of a VPN interface, like "mullvad-us3", and returns json data containing information on the state of the VPN connection. This information can be used to change the theme based on the state of your VPN connection in your waybar.css.
 
 Here's an example module in my Waybar config:
