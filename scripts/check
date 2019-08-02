@@ -6,11 +6,11 @@ readonly GREEN=$(tput bold && tput setaf 2)
 readonly NC=$(tput sgr0) # No color/turn off all tput attributes
 
 # Functions
-build_binary()
+run_scan_build()
 {
 	(
 		cd ../"$1" || exit
-		make clean && make
+		make clean && scan-build make
 	)
 }
 
@@ -20,10 +20,13 @@ printstep()
 }
 
 # Script
-if [ "$1" = "--valgrind" ]; then
-	printstep "Building binaries as debug binaries..."
-	build_binary "battery"
-	build_binary "vpn"
+if [ "$1" = "--long" ]; then
+	printstep "Running scan-build on battery.c..."
+	run_scan_build "battery"
+	printf "\n"
+
+        printstep "Running scan-build on vpn.c..."
+	run_scan_build "vpn"
 	printf "\n"
 
 	printstep "Running valgrind on battery binary..."

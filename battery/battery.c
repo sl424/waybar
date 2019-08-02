@@ -37,7 +37,7 @@
 float read_float_from_file(char fileToOpen[]);
 void read_string_from_file(char fileToOpen[], char contentOfFile[]);
 
-int main()
+int main(void)
 {	
 	// Variables to fill
 	float currentDischarge; 
