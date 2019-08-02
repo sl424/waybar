@@ -64,7 +64,7 @@ run_scan_build()
 	printstep "Running scan-build on $1.c..."
 	(
 		cd ../"$1" || exit
-		make clean && scan-build make
+		make clean && scan-build make debug
 	)
 	printf "\n"
 }
@@ -79,7 +79,7 @@ run_sparse()
 run_valgrind()
 {
 	printstep "Running valgrind on $1 binary..."
-	valgrind --leak-check=full ../"$1/$1"
+	valgrind --leak-check=full ../"$1/$1_debug"
 	printf "\n"
 }
 

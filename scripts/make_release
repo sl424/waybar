@@ -5,7 +5,7 @@ build_binary()
 {
 	(
 		cd ../"$1" || exit
-		make clean && make -f makefile_release
+		make clean && make release
 		sha256sum "$1"
 	)
 }

@@ -29,6 +29,7 @@
 // Constants
 #define MICROWATT_TO_WATT_FACTOR 1000000
 #define STR_BUFFER_LEN 15
+#define LARGE_STR_BUFFER_LEN 20
 
 // Battery paths
 #define PATH_POWER_NOW "/sys/class/power_supply/BAT0/power_now"
@@ -48,7 +49,7 @@ int main(void)
 	char wattDisplayString[STR_BUFFER_LEN];
 	char batteryState[STR_BUFFER_LEN];
 	char *batteryStateIcon;
-	char finalOutput[STR_BUFFER_LEN];
+	char finalOutput[LARGE_STR_BUFFER_LEN];
 	
 	// 1. Current discharge
 	currentDischarge = read_float_from_file(PATH_POWER_NOW) / 
