@@ -6,12 +6,25 @@ readonly GREEN=$(tput bold && tput setaf 2)
 readonly NC=$(tput sgr0) # No color/turn off all tput attributes
 
 # Functions
+build_binary()
+{
+	(
+		cd ../"$1" || exit
+		make clean && make
+	)
+}
+
 printstep()
 {
 	printf "%s==> %s%s%s\n" "${GREEN}" "${BOLDWHITE}" "$1" "${NC}"
 }
 
 # Script
+printstep "Building binaries as debug binaries..."
+build_binary "battery"
+build_binary "vpn"
+printf "\n"
+
 printstep "Running shellcheck on all shell scripts..."
 shellcheck ./*
 printf "\n"
