@@ -27,7 +27,7 @@
 #include <stdlib.h>
 
 // Constants
-#define mW_TO_WATTS_FACTOR 1000000
+#define MICROWATT_TO_WATT_FACTOR 1000000
 #define STR_BUFFER_LEN 15
 
 // Battery paths
@@ -52,7 +52,7 @@ int main(void)
 	
 	// 1. Current discharge
 	currentDischarge = read_float_from_file(PATH_POWER_NOW) / 
-	mW_TO_WATTS_FACTOR;
+	MICROWATT_TO_WATT_FACTOR;
 	
 	// 2. Battery percentage
 	batteryPercentage = read_float_from_file(PATH_ENERGY_NOW) / 
