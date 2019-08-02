@@ -47,12 +47,12 @@ int main(void)
 	float batteryPercentage;
 	char wattDisplayString[STR_BUFFER_LEN];
 	char batteryState[STR_BUFFER_LEN];
-	char *batteryIcon;
 	char *batteryStateIcon;
 	char finalOutput[STR_BUFFER_LEN];
 	
 	// 1. Current discharge
-	currentDischarge = read_float_from_file(PATH_POWER_NOW) / mW_TO_WATTS_FACTOR;
+	currentDischarge = read_float_from_file(PATH_POWER_NOW) / 
+	mW_TO_WATTS_FACTOR;
 	
 	// 2. Battery percentage
 	batteryPercentage = read_float_from_file(PATH_ENERGY_NOW) / 
@@ -70,23 +70,7 @@ int main(void)
 		batteryState[i] = tolower(batteryState[i]);
 	}
 	
-	// 5. Battery icon
-	if (batteryPercentage >= 90)
-		batteryIcon = "";
-	else if (batteryPercentage >= 80)
-		batteryIcon = "";
-	else if (batteryPercentage >= 60)
-		batteryIcon = "";
-	else if (batteryPercentage >= 50)
-		batteryIcon = "";
-	else if (batteryPercentage >= 40)
-		batteryIcon = "";
-	else if (batteryPercentage >= 20)
-		batteryIcon = "";
-	else 
-		batteryIcon = "";
-	
-	// 6. Battery state icon
+	// 5. Battery state icon
 	batteryStateIcon = "";
 	
 	if (strcmp(batteryState, "charging") == 0) {
@@ -96,11 +80,12 @@ int main(void)
 		strcpy(wattDisplayString, "");
 	}
 	
-	// 7. Final output
-	snprintf(finalOutput, sizeof(finalOutput), "%0.0f%% %s%s%s", 
-	batteryPercentage, wattDisplayString, batteryIcon, batteryStateIcon);
+	// 6. Final output
+	snprintf(finalOutput, sizeof(finalOutput), "%s%s", wattDisplayString, 
+	batteryStateIcon);
 	
-	printf("{\"text\": \"%s\", \"class\": \"%s\"}", finalOutput, batteryState);
+	printf("{\"text\": \"%s\", \"class\": \"%s\", \"percentage\": %0.0f}", 
+	finalOutput, batteryState, batteryPercentage);
 	
 	return 0;
 }

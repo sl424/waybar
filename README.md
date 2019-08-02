@@ -1,14 +1,23 @@
 # waybar-modules
-A repository of programs I use for custom waybar modules. 
+A repository of C programs I use for custom waybar modules. 
 
-[Binaries and sums are provided](https://gitlab.com/krathalan/waybar-modules/-/releases) but you can simply build with `make -f makefile_release` in the module directory of your choosing.
+[Binaries and sums are provided](https://gitlab.com/krathalan/waybar-modules/-/releases) but you can simply build with `make -f makefile_release` in the module directory of your choosing, or run `sh make_release` in the `scripts/` directory of the project to build all modules in each of their directories.
 
 ![My Waybar](mywaybar.jpg)
 
-## battery (C)
-A battery module that displays the battery percentage and current power draw in watts. Dynamically selects an appropriate battery icon based on battery percentage. Displays an additional charging icon when charging. Does not display current power draw in watts when charging.
+## battery
+A battery module that displays the current power draw in watts. Displays an additional charging icon when charging. Does not display current power draw in watts when charging.
+
+The program will return, as json data to Waybar, the percentage of the battery. This allows changing the icon based on the battery percentage in your Waybar config.
 
 The program will also return the current state of the battery (charging/discharging), in lowercase. This allows changing the theme based on battery states in your waybar.css.
+
+Here's two example outputs from the program:
+
+```
+{"text": "4W ", "class": "discharging", "percentage": 86}
+{"text": "", "class": "charging", "percentage": 86}
+```
 
 Here's an example module in my Waybar config:
 
@@ -16,7 +25,8 @@ Here's an example module in my Waybar config:
   "custom/battery": {
     "interval": 8,
     "tooltip": false,
-    "format": "{}",
+    "format": "{percentage}% {}{icon}",
+    "format-icons": ["", "", "", "", "", "", ""],
     "return-type": "json",
     "exec": "$HOME/path/to/battery/binary"
   },
@@ -38,7 +48,7 @@ Here's some example Waybar css for this battery module:
 }
 ```
 
-## vpn (C)
+## vpn
 This program takes the name of a VPN interface, like "mullvad-us3", and returns json data containing information on the state of the VPN connection. This information can be used to change the theme based on the state of your VPN connection in your waybar.css.
 
 Here's an example module in my Waybar config:
