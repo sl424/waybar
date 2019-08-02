@@ -20,10 +20,21 @@ printstep()
 }
 
 # Script
-printstep "Building binaries as debug binaries..."
-build_binary "battery"
-build_binary "vpn"
-printf "\n"
+if [ "$1" = "--valgrind" ]; then
+	printstep "Building binaries as debug binaries..."
+	build_binary "battery"
+	build_binary "vpn"
+	printf "\n"
+
+	printstep "Running valgrind on battery binary..."
+	valgrind --leak-check=full ../battery/battery
+	printf "\n"
+
+	printstep "Running valgrind on vpn binary..."
+	valgrind --leak-check=full ../vpn/vpn
+
+	exit 0
+fi
 
 printstep "Running shellcheck on all shell scripts..."
 shellcheck ./*
@@ -33,10 +44,9 @@ printstep "Running cppcheck on all source code files..."
 cppcheck ../
 printf "\n"
 
-printstep "Running valgrind on battery binary..."
-valgrind --leak-check=full ../battery/battery
+printstep "Running Sparse on battery.c..."
+sparse -Wsparse-all ../battery/battery.c
 printf "\n"
 
-printstep "Running valgrind on vpn binary..."
-valgrind --leak-check=full ../vpn/vpn
-
+printstep "Running Sparse on vpn.c..."
+sparse -Wsparse-all ../vpn/vpn.c

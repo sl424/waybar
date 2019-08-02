@@ -29,11 +29,14 @@
 
 int main(int argc, char** argv)
 {
-	// Construct path of VPN interface
+	// Variables
+	DIR* dir;
 	char bufferString[STR_BUFFER_LEN];
+	
+	// Construct path of VPN interface
 	snprintf(bufferString, sizeof(bufferString), "%s/%s", PATH_TO_INTERFACES, argv[1]);
 	
-	DIR* dir = opendir(bufferString);
+	dir = opendir(bufferString);
 	
 	if (dir) {
 		/* Directory exists. */

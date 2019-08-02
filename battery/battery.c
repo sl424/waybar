@@ -39,34 +39,35 @@ void read_string_from_file(char fileToOpen[], char contentOfFile[]);
 
 int main()
 {	
-	// 1. Get current discharge in milliwatts
-	float currentDischarge = read_float_from_file(PATH_POWER_NOW);
-	
-	// 1a. Convert to watts
-	currentDischarge = currentDischarge / mW_TO_WATTS_FACTOR;
-	
-	// 1b. Make watt display string
+	// Variables to fill
+	float currentDischarge; 
+	float batteryPercentage;
 	char wattDisplayString[STR_BUFFER_LEN];
+	char batteryState[STR_BUFFER_LEN];
+	char *batteryIcon;
+	char *batteryStateIcon;
+	char finalOutput[STR_BUFFER_LEN];
 	
+	// 1. Current discharge
+	currentDischarge = read_float_from_file(PATH_POWER_NOW) / mW_TO_WATTS_FACTOR;
+	
+	// 2. Battery percentage
+	batteryPercentage = read_float_from_file(PATH_ENERGY_NOW) / 
+	read_float_from_file(PATH_ENERGY_FULL) * 100;
+	
+	// 3. Watt display string
 	snprintf(wattDisplayString, sizeof(wattDisplayString), "%0.0fW ", 
 	currentDischarge); 
 	
-	// 2. Get current battery state and percentage
-	char batteryState[STR_BUFFER_LEN];
-	
+	// 4. Battery state
 	read_string_from_file(PATH_STATE, batteryState);
 	
-	// 2a. Convert batteryState to lowercase as CSS expects a lowercase value
+	// Convert batteryState to lowercase as CSS expects a lowercase value
 	for(int i = 0; batteryState[i]; i++){
 		batteryState[i] = tolower(batteryState[i]);
 	}
 	
-	float batteryPercentage = read_float_from_file(PATH_ENERGY_NOW) / 
-	read_float_from_file(PATH_ENERGY_FULL) * 100;
-	
-	// 3. Determine battery icon(s) to use based on battery state and percentage
-	char *batteryIcon;
-	
+	// 5. Battery icon
 	if (batteryPercentage >= 90)
 		batteryIcon = "";
 	else if (batteryPercentage >= 80)
@@ -82,7 +83,8 @@ int main()
 	else 
 		batteryIcon = "";
 	
-	char *batteryStateIcon = "";
+	// 6. Battery state icon
+	batteryStateIcon = "";
 	
 	if (strcmp(batteryState, "charging") == 0) {
 		batteryStateIcon = "";
@@ -91,9 +93,7 @@ int main()
 		strcpy(wattDisplayString, "");
 	}
 	
-	// Print final output
-	char finalOutput[STR_BUFFER_LEN];
-	
+	// 7. Final output
 	snprintf(finalOutput, sizeof(finalOutput), "%0.0f%% %s%s%s", 
 	batteryPercentage, wattDisplayString, batteryIcon, batteryStateIcon);
 	
@@ -104,11 +104,12 @@ int main()
 
 float read_float_from_file(char fileToOpen[])
 {
+	float toReturn;
 	FILE *fileToRead;
 	char *mode = "r";
+	
 	fileToRead = fopen(fileToOpen, mode);
 	
-	float toReturn;
 	fscanf(fileToRead, "%f", &toReturn);
 	
 	fclose(fileToRead);
@@ -120,6 +121,7 @@ void read_string_from_file(char fileToOpen[], char contentOfFile[])
 {
 	FILE *fileToRead;
 	char *mode = "r";
+	
 	fileToRead = fopen(fileToOpen, mode);
 	
 	fscanf(fileToRead, "%s", contentOfFile);
