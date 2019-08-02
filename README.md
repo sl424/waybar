@@ -1,7 +1,7 @@
 # waybar-modules
 A repository of programs I use for custom waybar modules. 
 
-Binaries are provided but you can simply build with `make`.
+[Binaries and sums are provided](https://gitlab.com/krathalan/waybar-modules/-/releases) but you can simply build with `make -f makefile_release` in the module directory of your choosing.
 
 ![My Waybar](mywaybar.jpg)
 
