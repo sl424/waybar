@@ -79,7 +79,7 @@ run_sparse()
 run_valgrind()
 {
 	printstep "Running valgrind on $1 binary..."
-	valgrind --leak-check=full ../"$1/$1_debug"
+	valgrind --leak-check=full --show-leak-kinds=all ../"$1/$1_debug"
 	printf "\n"
 }
 
