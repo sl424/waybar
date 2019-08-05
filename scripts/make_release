@@ -1,6 +1,7 @@
 #!/bin/bash
 #
-# Description: Script to help check project for errors.
+# Description: Script to build a release binary for all project
+#              modules.
 #
 # Homepage: https://gitlab.com/krathalan/waybar-modules
 #
@@ -35,72 +36,59 @@ set -Eeuo pipefail
 # ----------- Program variables -----------
 # -----------------------------------------
 
-# List of modules to check
-readonly MODULES=( "battery" "vpn" )
+readonly MODULESTOBUILD=("battery" "vpn")
+shaSums=()
 
 # Colors
-readonly BOLDWHITE=$(tput sgr0 && tput bold)
+readonly BOLD_WHITE=$(tput sgr0 && tput bold)
 readonly GREEN=$(tput bold && tput setaf 2)
 readonly NC=$(tput sgr0) # No color/turn off all tput attributes
+
+# ----------------------------------------------
+# --------------- User variables ---------------
+# ----------------------------------------------
+
+copyOnBuild=false
 
 # -----------------------------------------
 # --------------- Functions ---------------
 # -----------------------------------------
 
-perform_on_all_modules()
+build_binary()
 {
-	for module in "${MODULES[@]}"; do
-		"$1" "${module}"
-	done
+	cd ../"$1" || return 1
+	make clean > /dev/null
+	make release
+
+	if [[ "${copyOnBuild}" == true ]]; then
+		print_step "Copying wbm_$1 to /usr/bin..."
+		sudo cp "wbm_$1" /usr/bin/
+	fi
+
+	shaSums+=("$(sha256sum "wbm_$1")")
 }
 
-printstep()
+print_step()
 {
-	printf "%s==> %s%s%s\n" "${GREEN}" "${BOLDWHITE}" "$1" "${NC}"
+	printf "\n%s==>%s %s%s\n" "${GREEN}" "${BOLD_WHITE}" "$1" "${NC}"
 }
 
-run_scan_build()
-{
-	printstep "Running scan-build on wbm_$1.c..."
-	(
-		cd ../"$1" || exit
-		make clean && scan-build make debug
-	)
-	printf "\n"
-}
-
-run_sparse()
-{
-	printstep "Running Sparse on wbm_$1.c..."
-	sparse -Wsparse-all ../"$1/wbm_$1".c
-	printf "\n"
-}
-
-run_valgrind()
-{
-	printstep "Running valgrind on wbm_$1_debug binary..."
-	valgrind --leak-check=full --show-leak-kinds=all ../"$1/wbm_$1_debug"
-	printf "\n"
-}
-
-# -----------------------------------------
-# ---------------- Script -----------------
-# -----------------------------------------
+# --------------------------------------
+# --------------- Script ---------------
+# --------------------------------------
 
 if [[ $# -gt 0 ]]; then
-	if [[ "$1" = "--long" ]]; then
-		perform_on_all_modules "run_scan_build"
-		perform_on_all_modules "run_valgrind"
-		exit 0
+	if [[ $1 == "--copy" ]]; then
+		copyOnBuild=true
 	fi
 fi
 
-printstep "Running shellcheck on all shell scripts..."
-shellcheck ./*
-printf "\n"
+for module in "${MODULESTOBUILD[@]}"; do
+	build_binary "${module}"
+done
 
-printstep "Running cppcheck on all source code files..."
-cppcheck ../
-printf "\n"
+print_step "SHA256SUMS:"
 
-perform_on_all_modules "run_sparse"
+for sum in "${shaSums[@]}"; do
+	printf "%s\n" "${sum}"
+done
