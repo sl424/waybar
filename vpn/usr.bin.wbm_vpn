@@ -3,7 +3,7 @@
 
 #include <tunables/global>
 
-/usr/bin/wbm_vpn {
+profile wbm_vpn /usr/bin/wbm_vpn {
   #include <abstractions/base>
   /sys/devices/virtual/net/** r,
 }
