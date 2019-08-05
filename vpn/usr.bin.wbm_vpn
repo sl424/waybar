@@ -1,0 +1,9 @@
+# AppArmor profile for wbm_battery
+# https://gitlab.com/krathalan/waybar-modules
+
+#include <tunables/global>
+
+/usr/bin/wbm_vpn {
+  #include <abstractions/base>
+  /sys/devices/virtual/net/** r,
+}
