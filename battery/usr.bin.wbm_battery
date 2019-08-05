@@ -1,0 +1,9 @@
+# AppArmor profile for wbm_battery
+# https://gitlab.com/krathalan/waybar-modules
+
+#include <tunables/global>
+
+profile wbm_battery /usr/bin/wbm_battery {
+  #include <abstractions/base>
+  /sys/devices/** r,
+}

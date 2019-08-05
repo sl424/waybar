@@ -2,7 +2,7 @@
 CFLAGS = -Wall
 
 # Project files
-TARGET = vpn
+TARGET = wbm_vpn
 SRCS = $(TARGET).c
 
 # Debug build settings

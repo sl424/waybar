@@ -2,7 +2,7 @@
 CFLAGS = -Wall
 
 # Project files
-TARGET = battery
+TARGET = wbm_battery
 SRCS = $(TARGET).c
 
 # Debug build settings
