@@ -56,6 +56,7 @@ copyOnBuild=false
 
 build_binary()
 {
+	print_step "Building wbm_$1..."
 	cd ../"$1" || return 1
 	make clean > /dev/null
 	make release
