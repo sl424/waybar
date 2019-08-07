@@ -18,7 +18,7 @@ RELEXE = $(TARGET)
 # -fpic -shared: only for shared libraries
 # -fplugin=annobin: only for generating data for "hardening quality control"
 # -fasynchronous-unwind-tables: only for debugging/performance analysis
-RELCFLAGS = -Werror=format-security -Werror=implicit-function-declaration -march=x86-64 -mtune=generic -O2 -pipe -fno-plt -D_FORTIFY_SOURCE=2 -fexceptions -fpie -Wl,-pie -fstack-clash-protection -fstack-protector-strong -fcf-protection -Wl,-z,defs -Wl,-z,now -Wl,-z,relro -flto 
+RELCFLAGS = -Werror=format-security -Werror=implicit-function-declaration -march=x86-64 -mtune=generic -O2 -pipe -fno-plt -D_FORTIFY_SOURCE=2 -fexceptions -fpie -Wl,-pie -fstack-clash-protection -fstack-protector-strong -fcf-protection -Wl,-z,defs -Wl,-z,now -Wl,-z,relro -flto
 
 # Default build
 all: clean release
