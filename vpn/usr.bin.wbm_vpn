@@ -7,4 +7,5 @@ profile wbm_vpn /usr/bin/wbm_vpn {
   #include <abstractions/base>
   /usr/bin/wbm_vpn r,
   /sys/devices/virtual/net/** r,
+  deny /proc/*/net/netstat r,
 }
