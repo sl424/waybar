@@ -76,6 +76,9 @@ int main(void) {
   if (strcmp(batteryState, "charging") == 0 || currentDischarge == 0) {
     batteryStateIcon = "";
 
+    // Assert batteryState to charging if we got here through currentDischarge=0
+    snprintf(batteryState, sizeof(batteryState), "charging");
+
     // Also set watts to null, it means nothing when charging
     strcpy(wattDisplayString, "");
   }
