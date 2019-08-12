@@ -73,7 +73,7 @@ int main(void) {
   // 5. Battery state icon
   batteryStateIcon = "";
 
-  if (strcmp(batteryState, "charging") == 0) {
+  if (strcmp(batteryState, "charging") == 0 || currentDischarge == 0) {
     batteryStateIcon = "";
 
     // Also set watts to null, it means nothing when charging
