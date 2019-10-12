@@ -105,4 +105,4 @@ printf "\n"
 
 perform_on_all_modules "run_sparse"
 
-printstep "Don't forget to run clang-format --style=google!"
+printstep "Don't forget to run clang-format -i --style=google!"
