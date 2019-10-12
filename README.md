@@ -1,7 +1,7 @@
 # waybar-modules
 A repository of C programs I use for custom waybar modules. 
 
-[Binaries and sums are provided](https://gitlab.com/krathalan/waybar-modules/-/releases) but you can simply build with `make release` in the module directory of your choosing, or run `sh make_release` in the `scripts/` directory of the project to build all modules in each of their directories.
+[Binaries and sums are provided](https://gitlab.com/krathalan/waybar-modules/-/releases) but you can simply build with `make release` in the module directory of your choosing, or run `bash make_release` in the `scripts/` directory of the project to build all modules in each of their directories.
 
 AppArmor profiles are provided in the module directory (e.g. `battery/usr.bin.wbm_battery` for the custom battery module).
 
@@ -82,3 +82,4 @@ Here's some example Waybar css for this VPN module:
   border-bottom: 2px solid #dd2241;
 }
 ```
+
