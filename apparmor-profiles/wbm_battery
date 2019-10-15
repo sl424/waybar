@@ -6,7 +6,7 @@
 profile wbm_battery /usr/bin/wbm_battery {
   #include <abstractions/base>
   /usr/bin/wbm_battery r,
-  /sys/devices/** r,
+  @{sys}/devices/**/power_supply/*/{energy_full,energy_now,power_now,status} r,
   deny /dev/tty rw,
   deny /proc/*/net/netstat r,
 }
