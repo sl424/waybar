@@ -32,10 +32,10 @@
 #define LARGE_STR_BUFFER_LEN 20
 
 // Battery paths
-#define PATH_POWER_NOW "/sys/class/power_supply/BAT1/power_now"
-#define PATH_ENERGY_FULL "/sys/class/power_supply/BAT1/energy_full"
-#define PATH_ENERGY_NOW "/sys/class/power_supply/BAT1/energy_now"
-#define PATH_STATE "/sys/class/power_supply/BAT1/status"
+#define PATH_POWER_NOW "/sys/class/power_supply/BAT0/power_now"
+#define PATH_ENERGY_FULL "/sys/class/power_supply/BAT0/energy_full"
+#define PATH_ENERGY_NOW "/sys/class/power_supply/BAT0/energy_now"
+#define PATH_STATE "/sys/class/power_supply/BAT0/status"
 
 // Functions
 float read_float_from_file(char fileToOpen[]);
@@ -74,7 +74,7 @@ int main(void) {
   batteryStateIcon = "";
 
   if (strcmp(batteryState, "charging") == 0 ) {
-    batteryStateIcon = "⚡";
+    batteryStateIcon = "";
 
     // Assert batteryState to charging if we got here through currentDischarge=0
     snprintf(batteryState, sizeof(batteryState), "charging");

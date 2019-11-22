@@ -1,3 +1,6 @@
+A fork of the waybar-modules from https://gitlab.com/krathalan/waybar-modules
+
+
 # waybar-modules
 A repository of C programs I use for custom waybar modules. 
 

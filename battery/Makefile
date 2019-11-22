@@ -2,8 +2,10 @@
 CFLAGS = -Wall
 
 # Project files
-TARGET = wbm_battery
-SRCS = $(TARGET).c
+TARGET0 = wbm_battery0
+TARGET1 = wbm_battery1
+SRCS0 = $(TARGET0).c
+SRCS1 = $(TARGET1).c
 
 # Debug build settings
 DBGCC = clang
@@ -12,7 +14,8 @@ DBGCFLAGS = -O0 -g -Wsystem-headers -pedantic-errors -fuse-ld=lld
 
 # Release build settings
 RELCC = gcc
-RELEXE = $(TARGET)
+RELEXE0 = $(TARGET0)
+RELEXE1 = $(TARGET1)
 # See https://developers.redhat.com/blog/2018/03/21/compiler-and-linker-flags-gcc/
 # Excluded flags:
 # -fpic -shared: only for shared libraries
@@ -30,12 +33,15 @@ $(DBGEXE): $(SRCS)
 	$(DBGCC) $(CFLAGS) $(DBGCFLAGS) -o $(DBGEXE) $(SRCS)
 
 # Release rules
-release: $(RELEXE)
+release: $(RELEXE0) $(RELEXE1)
 
-$(RELEXE): $(SRCS)
-	$(RELCC) $(CFLAGS) $(RELCFLAGS) -o $(RELEXE) $(SRCS)
+$(RELEXE0): $(SRCS0)
+	$(RELCC) $(CFLAGS) $(RELCFLAGS) -o $(RELEXE0) $(SRCS0)
+
+$(RELEXE1): $(SRCS1)
+	$(RELCC) $(CFLAGS) $(RELCFLAGS) -o $(RELEXE1) $(SRCS1)
 
 # Clean up files
 clean:
-	rm -f $(DBGEXE) $(RELEXE)
+	rm -f $(DBGEXE) $(RELEXE0) $(RELEXE1)
 

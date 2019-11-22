@@ -74,7 +74,7 @@ int main(void) {
   batteryStateIcon = "";
 
   if (strcmp(batteryState, "charging") == 0 ) {
-    batteryStateIcon = "⚡";
+    batteryStateIcon = "";
 
     // Assert batteryState to charging if we got here through currentDischarge=0
     snprintf(batteryState, sizeof(batteryState), "charging");
