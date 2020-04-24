@@ -59,7 +59,7 @@ int main(void) {
                       read_float_from_file(PATH_ENERGY_FULL) * 100;
 
   // 3. Watt display string
-  snprintf(wattDisplayString, sizeof(wattDisplayString), "%0.0fW",
+  snprintf(wattDisplayString, sizeof(wattDisplayString), "%0.2fW",
            currentDischarge);
 
   // 4. Battery state

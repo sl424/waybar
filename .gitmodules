@@ -1,0 +1,3 @@
+[submodule ".config/waybar/waybar-modules"]
+	path = .config/waybar/waybar-modules
+	url = https://github.com/sl424/waybar.git
