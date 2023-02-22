@@ -32,14 +32,10 @@
 #define LARGE_STR_BUFFER_LEN 20
 
 // Battery paths
-#define PATH_POWER_NOW "/sys/class/power_supply/BAT1/power_now"
-#define PATH_CURRENT_NOW "/sys/class/power_supply/BAT1/current_now"
-#define PATH_VOLTAGE_NOW "/sys/class/power_supply/BAT1/voltage_now"
-#define PATH_ENERGY_FULL "/sys/class/power_supply/BAT1/energy_full"
-#define PATH_ENERGY_NOW "/sys/class/power_supply/BAT1/energy_now"
-#define PATH_CHARGE_NOW "/sys/class/power_supply/BAT1/charge_now"
-#define PATH_CHARGE_FULL "/sys/class/power_supply/BAT1/charge_full"
-#define PATH_STATE "/sys/class/power_supply/BAT1/status"
+#define PATH_POWER_NOW "/sys/class/power_supply/CMB0/power_now"
+#define PATH_ENERGY_FULL "/sys/class/power_supply/CMB0/energy_full"
+#define PATH_ENERGY_NOW "/sys/class/power_supply/CMB0/energy_now" 
+#define PATH_STATE "/sys/class/power_supply/CMB0/status"
 
 // Functions
 float read_float_from_file(char fileToOpen[]);
@@ -55,20 +51,12 @@ int main(void) {
   char finalOutput[LARGE_STR_BUFFER_LEN];
 
   // 1. Current discharge
-  /*
   currentDischarge =
       read_float_from_file(PATH_POWER_NOW) / MICROWATT_TO_WATT_FACTOR;
-	  */
-  currentDischarge =
-      read_float_from_file(PATH_CURRENT_NOW) / 1000 * read_float_from_file(PATH_VOLTAGE_NOW)/ 1000 / MICROWATT_TO_WATT_FACTOR;
 
   // 2. Battery percentage
-  /*
   batteryPercentage = read_float_from_file(PATH_ENERGY_NOW) /
                       read_float_from_file(PATH_ENERGY_FULL) * 100;
-					  */
-  batteryPercentage = read_float_from_file(PATH_CHARGE_NOW) /
-                      read_float_from_file(PATH_CHARGE_FULL) * 100;
 
   // 3. Watt display string
   snprintf(wattDisplayString, sizeof(wattDisplayString), "%0.2fW",
